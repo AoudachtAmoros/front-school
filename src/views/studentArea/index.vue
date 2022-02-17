@@ -8,7 +8,7 @@
                     <h1 class="text-center font-bold w-full text-3xl py-3 px-2 ">Waiting for your father</h1>
                    </div>
                 </div>
-                <div v-if="state==1" class="xs:px-2 sm:px-8 md:px-8 h-full w-full flex flex-col">
+                <div v-if="state==1 && user" class="xs:px-2 sm:px-8 md:px-8 h-full w-full flex flex-col">
                     <div class="w-full flex flex-col items-center justify-center">
                         <div class="py-4 px-2 w-full flex items-center justify-center">
                             <h1 class="text-center my-2 text-3xl">Let's see dady</h1>
@@ -17,19 +17,21 @@
                         <div class="w-full flex flex-col items-center sm:flex-row sm:justify-around">
                                 <div class="w-4/5 md:w-1/2 xl:w-1/3 p-2 flex flex-col items-center">
                                     <div class="py-2">
-                                        <h4 class="text-xl">{{test.parentName}}</h4>
+                                        <h4 class="text-xl">{{user.first_name}} {{user.last_name}}</h4>
                                     </div>
                                     <div class="img-continer w-full">
                                         <ImageC :data="images[0]" />
                                     </div>
                                 </div>
                                 <div class="w-4/5 md:w-1/2 xl:w-1/3 p-2 flex flex-col items-center">
-                                    <div class="py-2">
-                                            <h4 class="text-xl">{{test.studentName}}</h4>
+                                   <div v-for="(student, index) in user.students" :key="index">
+                                        <div class="py-2">
+                                            <h4 class="text-xl">{{student.s_first_name}} {{student.s_last_name}}</h4>
                                         </div>
                                     <div class="img-continer w-full">
                                         <ImageC :data="images[1]" />  
                                     </div>
+                                   </div>
                                 </div>
                         </div>
                         <div class="w-full flex justify-end mt-4">
@@ -46,6 +48,8 @@
 </template>
 <script>
 import ImageC from '../../components/ImageC.vue'
+import SocketioService from '../../services/sockets.io';
+
 export default {
   props: {
   },
@@ -54,7 +58,7 @@ export default {
     },
   data () {
     return {
-        state : 1,
+        state : 0,
         paylod:{
             parentImage:'',
             studentImage:'',
@@ -75,19 +79,33 @@ export default {
         test:{
             parentName:'El Allaoui Hamid',
             studentName:'El Allaoui Soufiane'
-        }
+        },
+        user :null
     }
     },
+    created(){
+        this.socket = SocketioService.setupSocketConnection();
+    },
     mounted(){
+        console.log('studentArea');
+        this.socket.emit('studentArea')
+        this.socket.on('studentEvent',(data)=>{
+            this.newstudent(data)
+        })
+        this.socket.on('actionDone',()=>{
+            this.actionDone()
+        })
        
     },
     methods:{
         validate(){
-            this.state=0
-            setTimeout(() => {
-                this.state =1
-            }, 5000);
-  
+            this.socket.emit('studentDone')
+            this.state = 0
+            this.user = null
+        },
+        newstudent(data){
+            this.state = 1
+            this.user = data.data
         }
     }
 }

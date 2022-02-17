@@ -28,7 +28,7 @@
             </header>
             <section class="w-full px-4 py-2 flex flex-col">
                 <div class="my-1 w-full">
-                <label class="text-sm text-gray-700" for="">Email</label>
+                <label class="text-sm text-gray-700" for="">RFID</label>
                 <input
                     placeholder="RFID"
                     type="text"
@@ -72,47 +72,59 @@
 </template>
 <script>
 import Loading from "../../components/loading.vue";
-import axios from "axios";
+import SocketioService from '../../services/sockets.io';
+// import axios from "axios";
 export default {
-  components: {
-    Loading,
-  },
-  data() {
-    return {
-      loading: false,
-      form: {
-        RFID: "",
-      },
-      user :null,
-      error: null,
-      baseUrl: this.$store.state.baseUrl,
-    };
-  },
-  mounted() {
-    document.querySelector("body").classList.add("stop-scrolling");
-  },
+    components: {
+        Loading,
+    },
+    data() {
+        return {
+            isConnected:false,
+            loading: false,
+            form: {
+                RFID: "",
+            },
+            user :null,
+            error: null,
+            baseUrl: this.$store.state.baseUrl,
+            socket : null,
+            step :'waiting',
+        };
+    },
+    created(){
+        this.socket = SocketioService.setupSocketConnection();
+    },
+    mounted() {
+        document.querySelector("body").classList.add("stop-scrolling");
+        this.socket.emit('parentArea')
+        this.socket.on('parentEvent',(data)=>{
+            this.newParent(data)
+        })
+        this.socket.on('parentDone',()=>{
+            this.actionDone()
+        })
+
+    },
   methods: {
     async submit() {
-        this.loading = true;
-        try {
-          var response = await axios.post(`${this.baseUrl}/parent`, {
-            RFID: this.form.RFID,
-          });
-          console.log(response);
-          if(response?.data?.data.length > 0){
-              console.log('done')
-              this.user = response.data.data[0]
-              this.error = null
-          }else{
-              this.user = null
-              this.error = 'invalid RFID'
-          }
-          this.loading = false;
-        } catch (error) {
-            console.log(error);
-            this.loading = false;
-            this.user = null
+        this.socket.emit('parentEvent',{RFID:this.form.RFID})
+        this.user = null
+        this.loading = true
+    },
+    newParent(data){
+        console.log(data);
+        if (data.status == 200) {
+            this.user = data.data
+        }else{
+            this.error = data.error
         }
+        this.loading = false
+    },
+    actionDone(){
+        this.form.RFID =''
+        this.user =null
+        this.error =null
     },
     close() {
       this.$emit("close");
