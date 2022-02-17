@@ -1,0 +1,64 @@
+POST 192.168.1.100:3000/login
+
+
+
+####
+POST http://192.168.1.98:3000/admin/login
+
+
+###
+POST http://192.168.1.98:3000/admin/register
+Content-Type: application/json
+
+{
+    "name" :"test",
+    "email" :"tes@test.com",
+    "password" :"123456"
+}
+
+###
+
+
+post http://localhost:3000/login
+Content-Type: application/json
+
+
+###
+
+get http://192.168.1.61:3005/test
+Content-Type: application/json
+
+###
+
+get http://192.168.1.61:3005/admin/parents
+Content-Type: application/json
+authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ1MDE0ODMzLCJleHAiOjE2NDUyMzA4MzN9.STNxkWkb-ebNO7DK88sf-cUKC238HX10G9uOwGsx8g8
+
+
+
+
+###
+
+get http://localhost:3000/admin/midd
+Content-Type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxMzc2ZjIzZGE5NTEyMDBkY2Q3MDE0MiIsImZpcnN0bmFtZSI6ImFvdWRhY2h0IiwibGFzdG5hbWUiOiJ0ZXN0IiwicG9zaXRpb24iOiJBRE1JTiIsImVtYWlsIjoiYW91ZGFjaHQuYW1vcm9zQGdtYWlsLmNvbSIsImFkZHJlc3MiOm51bGx9LCJjb21wYW55Ijp7Il9pZCI6IjYxMzc2ZjIzZGE5NTEyMDBkY2Q3MDE0MCIsIm5hbWUiOiJhb3VkYWNodCIsInN0YXR1cyI6IlVOQ09NUExFVEVEIn0sInN0b3JlIjp7Il9pZCI6IjYxMzc2ZjIzZGE5NTEyMDBkY2Q3MDE0NiIsIm5hbWUiOiJBb3VkYWNodCIsInN1YmRvbWFpbiI6ImFvdWRhY2h0LnN0b3JlaW5vLndvcmxkIn0sImlhdCI6MTYzNTU4OTgyNCwiZXhwIjoxNjM2NDUzODI0fQ.09SIZoP_6JI0AUE4uI5I7Pg4dWcvh88YnXp9nsygi90
+
+
+
+
+###
+POST http://localhost:3000/parent
+Content-Type: application/json
+
+{
+    "RFID" :"1234"
+}
+
+
+
+
+###
+POST https://api-stores.storeino.world/api/themes/update?id=617c259dbf8ebb0e568fab14
+Content-Type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxMzc2ZjIzZGE5NTEyMDBkY2Q3MDE0MiIsImZpcnN0bmFtZSI6ImFvdWRhY2h0IiwibGFzdG5hbWUiOiJ0ZXN0IiwicG9zaXRpb24iOiJBRE1JTiIsImVtYWlsIjoiYW91ZGFjaHQuYW1vcm9zQGdtYWlsLmNvbSIsImFkZHJlc3MiOm51bGx9LCJjb21wYW55Ijp7Il9pZCI6IjYxMzc2ZjIzZGE5NTEyMDBkY2Q3MDE0MCIsIm5hbWUiOiJhb3VkYWNodCIsInN0YXR1cyI6IlVOQ09NUExFVEVEIn0sInN0b3JlIjp7Il9pZCI6IjYxMzc2ZjIzZGE5NTEyMDBkY2Q3MDE0NiIsIm5hbWUiOiJBb3VkYWNodCIsInN1YmRvbWFpbiI6ImFvdWRhY2h0LnN0b3JlaW5vLndvcmxkIn0sImlhdCI6MTYzNTU4OTgyNCwiZXhwIjoxNjM2NDUzODI0fQ.09SIZoP_6JI0AUE4uI5I7Pg4dWcvh88YnXp9nsygi90
+
