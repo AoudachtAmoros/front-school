@@ -4,7 +4,7 @@ class SocketioService {
   socket;
   constructor() {}
   setupSocketConnection() {
-    this.socket = io('http://localhost:7000');
+    this.socket = io('http://192.168.1.61:7000');
     return this.socket
   }
 }
