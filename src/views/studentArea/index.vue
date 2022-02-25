@@ -17,16 +17,67 @@
                                 </div>
                                 <ImageC :data="user.img" /> 
                         </div>
+                            <!-- <button @click="add" class="py-2 px-4 bg-primary text-white opacity-80 hover:opacity-100 rounded shadow "> Add</button> -->
+                            <!-- <button @click="del" class="py-2 px-4 bg-primary text-white opacity-80 hover:opacity-100 rounded shadow "> Delete</button> -->
                     </div>
                 </div>
-                <div class="w-1/3 grid grid-cols-2 gap-2 oervlow-x-hidden overflow-y-auto bg-gray-400">
-                    <div class="w-full flex flex-col items-center p-2" v-for="(user, index) in users" :key="index">
-                            <div class="py-2">
-                                    <h4 class="text-xl">{{user.s_first_name}} {{user.s_last_name}}</h4>
+                <div class="w-1/3 oervlow-x-hidden overflow-y-auto bg-gray-400 p-2">
+                    <div class="flex items-center bg-gray-300 m-1 p-2 rounded">
+                        <span>
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                    width="32px" height="32px" viewBox="0 0 64.000000 64.000000"
+                                    preserveAspectRatio="xMidYMid meet">
+
+                                    <g transform="translate(0.000000,64.000000) scale(0.100000,-0.100000)"
+                                    fill="#000000" stroke="none">
+                                    <path d="M235 610 c-3 -5 -32 -10 -64 -10 -31 0 -62 -5 -69 -12 -17 -17 -17
+                                    -539 0 -556 17 -17 419 -17 436 0 17 17 17 539 0 556 -7 7 -38 12 -69 12 -32
+                                    0 -61 5 -64 10 -3 6 -42 10 -85 10 -43 0 -82 -4 -85 -10z m155 -40 l0 -30 -70
+                                    0 -70 0 0 30 0 30 70 0 70 0 0 -30z m-160 -10 c0 -17 -7 -20 -40 -20 l-40 0 0
+                                    -230 0 -230 170 0 170 0 0 230 0 230 -40 0 c-33 0 -40 3 -40 20 0 18 7 20 60
+                                    20 l60 0 0 -270 0 -270 -210 0 -210 0 0 270 0 270 60 0 c53 0 60 -2 60 -20z
+                                    m245 -250 l0 -215 -155 0 -155 0 -3 205 c-1 112 0 210 3 217 3 11 39 13 157
+                                    11 l153 -3 0 -215z"/>
+                                    <path d="M275 570 c3 -5 24 -10 45 -10 21 0 42 5 45 10 4 6 -13 10 -45 10 -32
+                                    0 -49 -4 -45 -10z"/>
+                                    <path d="M255 470 c-14 -15 -21 -17 -32 -9 -20 18 -29 1 -10 -18 16 -16 19
+                                    -16 44 9 15 15 25 30 22 33 -3 3 -14 -4 -24 -15z"/>
+                                    <path d="M320 480 c0 -6 27 -10 60 -10 33 0 60 4 60 10 0 6 -27 10 -60 10 -33
+                                    0 -60 -4 -60 -10z"/>
+                                    <path d="M320 440 c0 -5 14 -10 30 -10 17 0 30 5 30 10 0 6 -13 10 -30 10 -16
+                                    0 -30 -4 -30 -10z"/>
+                                    <path d="M255 370 c-14 -15 -21 -17 -32 -9 -20 18 -29 1 -10 -18 16 -16 19
+                                    -16 44 9 15 15 25 30 22 33 -3 3 -14 -4 -24 -15z"/>
+                                    <path d="M320 380 c0 -5 24 -10 54 -10 30 0 58 5 61 10 4 6 -17 10 -54 10 -34
+                                    0 -61 -4 -61 -10z"/>
+                                    <path d="M320 340 c0 -5 14 -10 30 -10 17 0 30 5 30 10 0 6 -13 10 -30 10 -16
+                                    0 -30 -4 -30 -10z"/>
+                                    <path d="M260 275 c-9 -11 -22 -14 -39 -10 -25 6 -25 6 -6 -15 l19 -21 25 25
+                                    c14 14 22 28 19 31 -3 3 -11 -2 -18 -10z"/>
+                                    <path d="M320 280 c0 -5 24 -10 54 -10 30 0 58 5 61 10 4 6 -17 10 -54 10 -34
+                                    0 -61 -4 -61 -10z"/>
+                                    <path d="M320 240 c0 -5 14 -10 30 -10 17 0 30 5 30 10 0 6 -13 10 -30 10 -16
+                                    0 -30 -4 -30 -10z"/>
+                                    <path d="M250 175 c-8 -10 -21 -13 -34 -9 -21 7 -21 6 -2 -15 l19 -21 24 22
+                                    c13 12 23 25 23 30 0 13 -17 9 -30 -7z"/>
+                                    <path d="M348 183 c17 -2 47 -2 65 0 17 2 3 4 -33 4 -36 0 -50 -2 -32 -4z"/>
+                                    <path d="M320 140 c0 -5 14 -10 30 -10 17 0 30 5 30 10 0 6 -13 10 -30 10 -16
+                                    0 -30 -4 -30 -10z"/>
+                                    </g>
+                        </svg>
+                        </span>
+                       <h1 class="ml-2 text-xl">Waiting List</h1><br>
+                    </div>
+                    <div class=" grid grid-cols-2 gap-2 overflow-y-auto">
+                        <div class="w-full flex flex-col hover:border-2 border-red-300 items-center p-2 m-1 bg-gray-500 rounded" v-for="(user, index) in users" :key="index">
+                                <div class="py-2">
+                                        <h4 class="text-xl text-white">{{user.s_first_name}} {{user.s_last_name}}</h4>
+                                    </div>
+                                <div class="img-continer w-full rounded">
+                                    <ImageC :data="user.img" class="rounded" />  
                                 </div>
-                            <div class="img-continer w-full">
-                                <ImageC :data="user.img" />  
-                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -55,6 +106,7 @@ export default {
         },
         users :[
             {
+<<<<<<< HEAD
               first_name :'user 1',
               last_name :'ls',
               s_first_name :'student',
@@ -72,47 +124,17 @@ export default {
                img :  {
                     src:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuB4NNDud9NhGDNksKtH-gX4mNtXm6D51EcRJBqk9lU89Hc0ycbRurFvgsziP89cwbuaA&usqp=CAU',
                     alt:'',
-                },
-            },
-            {
-              first_name :'user 3',
-              last_name :'unser',
-              s_first_name :'student',
-              s_last_name :'unser',
-               img :  {
-                        src:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPtP0RSMzOpYRj2AN0WHvOnoAser9Mb0yzGhKnSAADy_kjZ2I8JZ-U6hkODUsX0J6rV3k&usqp=CAU',
-                        alt:'',
-                    },
-            },
-        ]
-    }
-    },
-    created(){
-        this.socket = SocketioService.setupSocketConnection();
-    },
-    mounted(){
-        console.log('studentArea');
-        this.socket.emit('studentArea')
-        this.socket.on('studentEvent',(data)=>{
-            this.newstudent(data)
-        })
-        this.socket.on('actionDone',()=>{
-            this.actionDone()
-        })
+<<<<<<< HEAD
         setInterval(() => {
             this.moveSlider()
-        }, 5000);
+=======
+     
+        setInterval(() => {
+            this.moveSlider()
+        }, 4000);
+>>>>>>> 0d859ce4d3f52803f937d6a16c0a067064b6df0d
     },
     methods:{
-        validate(){
-            this.socket.emit('studentDone')
-            this.state = 0
-            this.user = null
-        },
-        newstudent(data){
-            this.state = 1
-            this.users.push(data.data) 
-        },
         moveSlider(){
             if (this.users.length>0) {
                 if (this.currentIndex < this.users.length ) {
@@ -122,13 +144,53 @@ export default {
                     this.currentIndex = 0
                 }
             }
+        },
+        add(data){
+            console.log(data);
+            // this.users.push(this.user)
+        },
+<<<<<<< HEAD
+        newstudent(data){
+            this.state = 1
+            this.users.push(data.data) 
+        },
+        moveSlider(){
+            if (this.users.length>0) {
+                if (this.currentIndex < this.users.length ) {
+                    this.currentIndex +=1
+                }
+                    this.currentIndex = 0
+                }
+            }
+=======
+        del(data){
+            console.log(data);
+            // let index =-1
+            // for (let i = 0; i < this.users.length; i++) {
+            //     if (this.user.id==this.users[i].id) {
+            //         index = i  
+            //     }
+            // }
+
+            // if (index >= 0) {
+            //     this.users.splice(index, 1)
+            //     if (index>0 && this.currentIndex >= index ) {
+            //       this.currentIndex -=1   
+            //     }
+            // }
+            //     console.log(this.users);
+>>>>>>> 0d859ce4d3f52803f937d6a16c0a067064b6df0d
         }
     }
 }
 </script>
 <style scoped>
 .img-continer{
+<<<<<<< HEAD
     height:200px;
+=======
+    height:160px;
+>>>>>>> 0d859ce4d3f52803f937d6a16c0a067064b6df0d
 }
 .slider-container{
     /* height: ; */
