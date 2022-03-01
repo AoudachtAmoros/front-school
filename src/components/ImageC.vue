@@ -1,5 +1,5 @@
 <template>
-    <img :src="data.src" :alt="data.alt">
+    <img :src="data.src" :alt="data.alt" class="object-cover">
 </template>
 
 <script>

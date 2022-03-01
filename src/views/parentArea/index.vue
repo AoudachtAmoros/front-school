@@ -1,8 +1,8 @@
 <template>
   <main  class="flex items-center justify-around w-full" style="height:calc(100vh - 80px)">   
-    <div class="pop-up w-1/3 bg-white rounded shadow-md relative">
-         <Loading v-if="loading" style="min-height: 350px; background: white" />
-        <div v-if="!firstScan.state && !loading" class="w-full h-full flex flex-col">
+    <div class="pop-up w-1/3 bg-white rounded shadow-md relative transition ease-in-out delay-6050" :class="{'border-2 border-red-300':(firstScan.error)}">
+         <Loading v-if="loading1" style="min-height: 350px; background: white" />
+        <div v-if="!firstScan.state && !loading1" class="w-full h-full flex flex-col">
             <header class="px-4 py-2 w-full border-b">
                 <h1 class="text-xl text-center text-gray-700 w-full">First Scan</h1>
             </header>
@@ -23,7 +23,8 @@
                     text-sm
                     focus:border-2 focus:outline-none
                     "
-                    :class="{'border-red-300 border-2':error}"
+                :class="{'border-2 border-red-300':(firstScan.error)}"
+
                 />
                 </div>
             </section>
@@ -42,33 +43,33 @@
                     rounded
                     shadow
                 "
+                :class="{'border-2 border-red-300':(firstScan.error)}"
                 >
                 Submit
                 </button>
             </footer>
         </div>
-        <div v-if="firstScan.state && !loading" class="w-full h-full flex flex-col">
+        <div v-if="firstScan.state && !loading1" class="w-full h-full flex flex-col">
             <header class="px-4 py-2 w-full border-b">
                 <h1 class="text-xl text-center text-gray-700 w-full">Parent Area</h1>
             </header>
             <section class="w-full px-4 py-2 flex flex-col">
-                <h2 class="py-2 text-2xl text-gray-600"> sir khod wldek </h2>
+                <h2 class="py-2 text-2xl text-gray-600"> Get your son </h2>
             </section>
         </div>
         <div v-if="firstScan.error" class="w-full h-full flex flex-col">
-            <header class="px-4 py-2 w-full border-b">
-                <h1 class="text-xl text-center text-gray-700 w-full">First Scan</h1>
+            <header class="px-4 py-2 w-full ">
+                <h1 class="text-xl text-center text-gray-700 w-full">Error</h1>
             </header>
             <section class="w-full px-4 py-2 flex flex-col">
-                                <h2 class="py-2 text-2xl text-gray-600"> {{secondScan.error}} </h2>
-
+                <h2 class="py-2 text-center text-2xl text-red-300"> {{firstScan.error}} </h2>
             </section>
         </div>
     </div>
     <!-- second scan -->
-    <div class="pop-up w-1/3 bg-white rounded shadow-md relative">
-         <Loading v-if="loading" style="min-height: 350px; background: white" />
-        <div v-if="!secondScan.state && !loading" class="w-full h-full flex flex-col">
+    <div class="pop-up w-1/3 bg-white rounded shadow-md relative transition ease-in-out delay-250"  :class="{'border-2 border-red-300':(secondScan.error)}">
+         <Loading v-if="loading2" style="min-height: 350px; background: white" />
+        <div v-if="!secondScan.state && !loading2" class="w-full h-full flex flex-col">
             <header class="px-4 py-2 w-full border-b">
                 <h1 class="text-xl text-center text-gray-700 w-full">Second Scan</h1>
             </header>
@@ -89,7 +90,7 @@
                     text-sm
                     focus:border-2 focus:outline-none
                     "
-                    :class="{'border-red-300 border-2':error}"
+                    :class="{'border-2 border-red-300':(secondScan.error)}"
                 />
                 </div>
             </section>
@@ -108,22 +109,23 @@
                     rounded
                     shadow
                 "
+                :class="{'border-2 border-red-300':(secondScan.error)}"
                 >
                 Submit
                 </button>
             </footer>
         </div>
-        <div v-if="secondScan.state && !loading" class="w-full h-full flex flex-col">
+        <div v-if="secondScan.state && !loading2" class="w-full h-full flex flex-col">
             <header class="px-4 py-2 w-full border-b">
                 <h1 class="text-xl text-center text-gray-700 w-full">Parent Area</h1>
             </header>
             <section class="w-full px-4 py-2 flex flex-col">
-                <h2 class="py-2 text-2xl text-gray-600"> lah i3awnek </h2>
+                <h2 class="py-2 text-2xl text-gray-600"> Thanks </h2>
             </section>
         </div>
-        <div v-if="secondScan.error && !loading" class="w-full h-full flex flex-col">
+        <div v-if="secondScan.error && !loading2" class="w-full h-full flex flex-col">
             <header class="px-4 py-2 w-full border-b">
-                <h1 class="text-xl text-center text-gray-700 w-full">Parent Area</h1>
+                <h1 class="text-xl text-center text-gray-700 w-full">Error</h1>
             </header>
             <section class="w-full px-4 py-2 flex flex-col">
                 <h2 class="py-2 text-2xl text-gray-600"> {{secondScan.error}} </h2>
@@ -142,7 +144,9 @@ export default {
     },
     data() {
         return {
-            loading: false,
+            area :null,
+            loading1: false,
+            loading2: false,
             firstScan:{
               state : false,
               user:null,
@@ -171,77 +175,85 @@ export default {
     },
     mounted() {
         document.querySelector("body").classList.add("stop-scrolling");
-        this.socket.emit('parentArea')
+        let area = window.localStorage.getItem('area')
+        if (area) {
+            this.area = area
+        }else{
+            let area = Date.now()
+            window.localStorage.setItem('area',area)
+            this.area = area
+        }
+        this.socket.emit('parentArea',{area:this.area})
+
         this.socket.on('firstScan',(data)=>{
             this.firstScanM(data)
         })
         this.socket.on('secondScan',(data)=>{
             this.secondScanM(data)
         })
-        // this.socket.on('parentDone',()=>{
-        //     this.actionDone()
-        // })
-
     },
   methods: {
     async submit1() {
-        this.socket.emit('firstScan',{RFID:this.form1.RFID})
+      if (this.form1.RFID.length<3 || !this.isNumeric(this.form1.RFID)) {
+        this.firstScan.error = "Id must be more than 3 digit"
+        setTimeout(() => {
+              this.firstScan.error = null
+        }, 5000);
+      }else{
+        this.socket.emit('firstScan',{RFID:this.form1.RFID,area:this.area})
         this.firstScan.user = null
-        this.loading = true
+        this.loading1 = true
+      }
+      this.form1.RFID =''
     },
     async submit2() {
-        this.socket.emit('secondScan',{RFID:this.form2.RFID})
+      if (this.form2.RFID.length<3 || !this.isNumeric(this.form1.RFID)) {
+        this.secondScan.error = "Id must be more than 3 digit"
+        setTimeout(() => {
+              this.secondScan.error = null
+        }, 5000);
+      }else{
+        this.socket.emit('secondScan',{RFID:this.form2.RFID,area:this.area})
         this.secondScan.user = null
-        this.loading = true
+        this.loading2 = true
+      }
+      this.form1.RFID =''
+
     },
     firstScanM(data){
-        this.loading = false
-
-      if(data.status==true){
-        this.firstScan.state = true
-        console.log(data);
-        this.firstScan.user = data.response
-        setTimeout(() => {
-            this.firstScan.state = false
-            this.firstScan.user = null
-        }, 4000);
-      }else{
-        this.firstScan.error = data.error
-        setTimeout(() => {
-              this.firstScan.error = data.null
-        }, 4000);
+      this.loading1 = false
+      if(data.status==200){
+          this.firstScan.state = true
+          this.firstScan.user = data.data
+          setTimeout(() => {
+              this.firstScan.state = false
+              this.firstScan.user = null
+          }, 5000);
+        }else{
+          this.firstScan.error = data.error
+          setTimeout(() => {
+                this.firstScan.error =null
+          }, 5000);
       }
     },
     secondScanM(data){
-        this.loading = false
-         if(data.status==true){
-        this.secondScan.state = true
-        console.log(data);
-        this.secondScan.user = data.response
-        setTimeout(() => {
-            this.secondScan.state = false
-            this.secondScan.user = null
-        }, 4000);
-      }else{
-        this.secondScan.error = data.error
-        setTimeout(() => {
-              this.secondScan.error = data.null
-        }, 4000);
-      }
-    },
-    newParent(data){
-        console.log(data);
-        if (data.status == 200) {
-            this.user = data.data
+        this.loading2 = false
+        if(data.status==200){
+            this.secondScan.state = true
+            this.secondScan.user = data.response
+            setTimeout(() => {
+                this.secondScan.state = false
+                this.secondScan.user = null
+            }, 5000);
         }else{
-            this.error = data.error
+            this.secondScan.error = data.error
+            setTimeout(() => {
+                  this.secondScan.error =null
+            }, 5000);
         }
-        this.loading = false
     },
-    actionDone(){
-        this.form.RFID =''
-        this.user =null
-        this.error =null
+     isNumeric(num){
+      return !isNaN(num)
     },
     close() {
       this.$emit("close");
