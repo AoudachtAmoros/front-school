@@ -148,7 +148,7 @@ export default {
 .aside{
     position: sticky;
     top: 76px;
-    z-index: 10;
+    z-index: 20;
     width: 280px;
     height: calc(100vh - 76px);
     background: #171821;
@@ -157,10 +157,10 @@ export default {
     min-height: 60px;
 }
 .box{
-    width: 250px;
+    width: 255px;
     transform: translateZ(0);
     backface-visibility: hidden;
-    transition: all .2s ease;
+    transition: all .2.2s ease;
     display: table;
     -webkit-font-smoothing: subpixel-antialiased;
 }
@@ -168,7 +168,7 @@ export default {
     transform: scale(1.02);
 }
 .saved-user:hover span{
-    color: rgb(39, 144, 185);
+    color: rgb(38, 144, 185);
     text-decoration: underline;
 }
 
